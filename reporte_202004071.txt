@@ -1,0 +1,18 @@
++------------+-------+--------+-----------+-------------+
+|   Nombre   | Stock | Precio | Ubicaci�n | Valor Total |
++------------+-------+--------+-----------+-------------+
+|  Tomates   |  100  |  1.0   |  BodegaA  |    100.0    |
+|  Manzanas  |   0   |  3.0   |  BodegaB  |     0.0     |
+|   Peras    |  175  |  3.25  |  BodegaC  |   568.75    |
+| Plátanos  |  75   |  1.75  |  BodegaD  |   131.25    |
+|   Queso    |  35   |  20.5  |  BodegaE  |    717.5    |
+|   Helado   |  172  |  6.5   |  BodegaF  |   1118.0    |
+| Arándanos |  735  |  0.5   |  BodegaG  |    367.5    |
+|  Tomates   |   1   |  1.0   |  BodegaG  |     1.0     |
+|  Manzanas  |  150  |  3.0   |  BodegaF  |    450.0    |
+|   Peras    |  101  |  3.25  |  BodegaE  |   328.25    |
+| Plátanos  |   0   |  1.75  |  BodegaC  |     0.0     |
+|   Queso    |  60   |  20.5  |  BodegaD  |   1230.0    |
+|   Helado   |  80   |  6.5   |  BodegaB  |    520.0    |
+| Arándanos |  155  |  0.5   |  BodegaA  |    77.5     |
++------------+-------+--------+-----------+-------------+
