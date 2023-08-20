@@ -25,24 +25,26 @@ def menu():
         print('Intente otra vez')
         menu()
 
-lista_productos = []
+lista_productos = []#definiendola aca para que las clases la puedan modificar
 
 
 def guardar_productos_en_archivo():
-    data = []
+    mdatos = []#guardar en esta lista los datos a mostrar
     for producto in lista_productos:
-        valor_total = producto.stock * producto.precio
-        data.append([producto.nombre, producto.stock, producto.precio, producto.ubicacion, valor_total])
-    headers = ["Nombre", "Stock", "Precio", "Ubicación", "Valor Total"]
+        if producto.stock > 0:  #Para solo mostrar los productos que tengan stock mayor que cero
+            valor_total = producto.stock * producto.precio#para añadir la comlumna vtotal de prodctu.nombre
+            mdatos.append([producto.nombre, producto.stock, producto.precio, valor_total, producto.ubicacion])
+
+    if not mdatos:
+        print("Se vendio todo o no se cargo correctamente el archivo")
+        return
+    headers = ["Nombre", "Stock", "Precio", "Valor Total", "Ubicación"]
 
     # usar w para sobreescribir, si fuese a necesitar agregar usar 'a'
     with open('reporte_202004071.txt', 'w') as archivo:
-        archivo.write(tabulate(data, headers, tablefmt="pretty"))#      https://www.youtube.com/watch?v=Yq0lbu8goeA
+        archivo.write(tabulate(mdatos, headers, tablefmt="pretty"))#      https://www.youtube.com/watch?v=Yq0lbu8goeA
         print('Informe guardado en "reporte_202004071.txt".')
 
-
-# Llama a esta función para generar el informe y guardarlos en "reporte.txt"
-guardar_productos_en_archivo()
 def imprimir_productos():
     data = []
     for producto in lista_productos:
@@ -54,7 +56,7 @@ def cargar():
     with open('inventario.inv', 'r') as archivo:#usare with por que dice que esto asegura el cierre del archivo cuando termine
         for linea in archivo:
             if linea.startswith("crear_producto"):
-                print('crear')
+                print('crear')#para comprobar que se cumpla la linea anterior eliminar despues
                 partes = linea.strip().split(';')
                 if len(partes) == 4:# len para medir la longitud de la lista partes la cual contendra nombre,stock,precio,ubicacion
                     nombre = partes[0].split(' ')[1]#indicando que nombre sera partes[0] que es crear_producto nombre
@@ -65,7 +67,7 @@ def cargar():
                     lista_productos.append(producto)
 
 
-    imprimir_productos()
+    #imprimir_productos()
 
 
 def modificar():
@@ -77,20 +79,20 @@ def modificar():
                 datos = partes[1:]
                 if accion == "agregar_stock":
                     nombre, cantidad, ubicacion = datos[0].split(';')
-                    agregar_stock(nombre, int(cantidad), ubicacion)
+                    agregar_stock(nombre, int(cantidad), ubicacion)#este esta en for por eso la bandera regresa a false
                 elif accion == "vender_producto":
                     nombre, cantidad, ubicacion = datos[0].split(';')
                     vender_producto(nombre, int(cantidad), ubicacion)
     except FileNotFoundError:
         print("El archivo de movimientos 'movimiento.mov' no encontrado.")
-
+#usando clases para ordenarlo
 def agregar_stock(nombre, cantidad, ubicacion): #de aca corregir que no me agrega de manera correcta si se encuentra un producto sin ubicacion
     producto_encontrado = False  #probando poninendo un false y que siempre que este sea cambiado a true si se encontro el producto
 
     for producto in lista_productos:
         if producto.nombre == nombre and producto.ubicacion == ubicacion:
-            producto.stock += cantidad
-            producto_encontrado = True
+            producto.stock += cantidad#sumando la cantidad nueva mas la anterior del producto producto.nombre despues de comprobar su ubicacion
+            producto_encontrado = True#haciendo la bandera true para que vuelva a repetir y no de mensaje de error
             break
 
     if not producto_encontrado:#o se queda en false si no
@@ -101,11 +103,12 @@ def agregar_stock(nombre, cantidad, ubicacion): #de aca corregir que no me agreg
 
 def vender_producto(nombre, cantidad, ubicacion):
     for producto in lista_productos:
-        if producto.nombre == nombre and producto.ubicacion == ubicacion:
+        if producto.nombre == nombre and producto.ubicacion == ubicacion:#comprobando que el producto exista y tenga ubicacion valida
             if producto.stock >= cantidad:
                 producto.stock -= cantidad
             else:
                 print(f"No hay suficiente stock de {nombre} en {ubicacion}")
             return
 
+#principal aca
 menu()
