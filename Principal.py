@@ -20,6 +20,7 @@ def menu():
     elif eleccion == '3':
         print('Opcion 3')
         guardar_productos_en_archivo()
+        menu()
     else:
         print('Opcion incorrecta')
         print('Intente otra vez')
