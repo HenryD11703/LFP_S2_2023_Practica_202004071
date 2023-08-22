@@ -36,15 +36,15 @@ def guardar_productos_en_archivo():
             valor_total = producto.stock * producto.precio#para añadir la comlumna vtotal de prodctu.nombre
             mdatos.append([producto.nombre, producto.stock, producto.precio, valor_total, producto.ubicacion])
 
-    if not mdatos:
+    if not mdatos:# si la lista esta vacia imprimir esto
         print("Se vendio todo o no se cargo correctamente el archivo")
         return
     headers = ["Nombre", "Stock", "Precio", "Valor Total", "Ubicación"]
 
     # usar w para sobreescribir, si fuese a necesitar agregar usar 'a'
-    with open('reporte_202004071.txt', 'w') as archivo:
+    with open('reporte_202004071.txt', 'w',encoding='UTF-8') as archivo:
         archivo.write(tabulate(mdatos, headers, tablefmt="pretty"))#      https://www.youtube.com/watch?v=Yq0lbu8goeA
-        print('Informe guardado en "reporte_202004071.txt".')
+        print('Informe generado correctamente')
 
 def imprimir_productos():
     data = []
@@ -54,7 +54,7 @@ def imprimir_productos():
     print(tabulate(data, headers, tablefmt="pretty"))
 
 def cargar():
-    with open('inventario.inv', 'r') as archivo:#usare with por que dice que esto asegura el cierre del archivo cuando termine
+    with open('inventario.inv', 'r',encoding='UTF-8') as archivo:#usare with por que dice que esto asegura el cierre del archivo cuando termine
         for linea in archivo:
             if linea.startswith("crear_producto"):
                 print('crear')#para comprobar que se cumpla la linea anterior eliminar despues
@@ -68,12 +68,12 @@ def cargar():
                     lista_productos.append(producto)
 
 
-    #imprimir_productos()
+    imprimir_productos()
 
 
 def modificar():
     try:
-        with open('movimiento.mov', 'r') as archivo_movimientos:
+        with open('movimiento.mov', 'r',encoding='UTF-8') as archivo_movimientos:
             for linea in archivo_movimientos:
                 partes = linea.strip().split(' ')
                 accion = partes[0]
